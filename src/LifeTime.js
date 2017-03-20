@@ -1,19 +1,23 @@
+import ActiveTimeZoneTable from './ActiveTimeZoneTable';
+
 export default class LifeTime {
   sessionCount = 0;
 
   activeFrequency;
+  activeTimeZoneTable;
   currentDate;
   startDate;
   endDate;
 
-  constructor(period, activeFrequency) {
+  constructor(period, activeFrequency, activeTimeZoneTableConfig) {
     this.activeFrequency = activeFrequency;
+    this.activeTimeZoneTable = new ActiveTimeZoneTable(activeTimeZoneTableConfig);
 
     this.startDate = new Date(period[0]);
     this.endDate = new Date(period[1]);
-
     this.currentDate = new Date(period[0]);
-    this.updateCurrentTime(this.currentSessionStartTime + (Math.random() * this.activeFrequency));
+
+    this.fowardToCurrentSession();
   }
 
   fowardToNextTime(time) {
@@ -26,7 +30,17 @@ export default class LifeTime {
   fowardToNextSession() {
     this.sessionCount += 1;
 
-    this.updateCurrentTime(this.currentSessionStartTime + (Math.random() * this.activeFrequency));
+    this.fowardToCurrentSession();
+  }
+
+  fowardToCurrentSession() {
+    const isSessionExist = this.activeTimeZoneTable.checkSessionExist(this.currentSessionStartTime, this.activeFrequency);
+
+    if (isSessionExist) {
+      const sessionTime = this.activeTimeZoneTable.getSessionStartTime(this.currentSessionStartTime, this.activeFrequency);
+
+      this.updateCurrentTime(sessionTime);
+    }
   }
 
   addToCurrentTime(time) {
