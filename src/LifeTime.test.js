@@ -2,9 +2,13 @@ import test from 'ava';
 import sinon from 'sinon';
 
 import LifeTime from './LifeTime';
+import ActiveTimeZoneTable from './ActiveTimeZoneTable';
 
 test('initialize', t => {
   sinon.stub(Math, 'random').returns(0.5);
+  sinon.stub(ActiveTimeZoneTable.prototype, 'checkSessionExist').returns(true);
+  sinon.stub(ActiveTimeZoneTable.prototype, 'getSessionStartTime').returns(new Date('2017-01-01 12:00:00').getTime());
+
   const lifeTime = new LifeTime([ '2017-01-01 00:00:00', '2017-01-04 00:00:00' ], 1 * 24 * 60 * 60 * 1000);
 
   t.is(
@@ -21,7 +25,10 @@ test('initialize', t => {
     lifeTime.isOver,
     false
   );
+
   Math.random.restore();
+  ActiveTimeZoneTable.prototype.checkSessionExist.restore();
+  ActiveTimeZoneTable.prototype.getSessionStartTime.restore();
 });
 
 test('fowardToNextTime', t => {
@@ -87,6 +94,9 @@ test('fowardToNextTime and overdated', t => {
 
 test('fowardToNextSession', t => {
   sinon.stub(Math, 'random').returns(0);
+  sinon.stub(ActiveTimeZoneTable.prototype, 'checkSessionExist').returns(true);
+  sinon.stub(ActiveTimeZoneTable.prototype, 'getSessionStartTime').returns(new Date('2017-01-01 00:00:00').getTime());
+
   const lifeTime = new LifeTime([ '2017-01-01 00:00:00', '2017-01-04 00:00:00' ], 1 * 24 * 60 * 60 * 1000);
   Math.random.restore();
 
@@ -97,6 +107,9 @@ test('fowardToNextSession', t => {
     lifeTime.currentTime,
     new Date('2017-01-01 01:00:00').getTime()
   );
+
+  ActiveTimeZoneTable.prototype.getSessionStartTime.restore();
+  sinon.stub(ActiveTimeZoneTable.prototype, 'getSessionStartTime').returns(new Date('2017-01-02 12:00:00').getTime());
 
   lifeTime.fowardToNextSession(); // Next session start at 2017-01-02 00:00:00
   Math.random.restore();
@@ -110,10 +123,14 @@ test('fowardToNextSession', t => {
     lifeTime.isOver,
     false
   );
+
+  ActiveTimeZoneTable.prototype.checkSessionExist.restore();
+  ActiveTimeZoneTable.prototype.getSessionStartTime.restore();
 });
 
 test('fowardToNextSession and overdated', t => {
   sinon.stub(Math, 'random').returns(0);
+
   const lifeTime = new LifeTime([ '2017-01-01 00:00:00', '2017-01-04 00:00:00' ], 1 * 24 * 60 * 60 * 1000);
   Math.random.restore();
 

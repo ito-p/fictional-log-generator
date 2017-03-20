@@ -34,10 +34,10 @@ export default class LifeTime {
   }
 
   fowardToCurrentSession() {
-    const isSessionExist = this.activeTimeZoneTable.checkSessionExist(this.currentSessionStartTime, this.activeFrequency);
+    const isSessionExist = this.activeTimeZoneTable.checkSessionExist(this.currentSessionStartTime, this.currentSessionStartTime + this.activeFrequency);
 
     if (isSessionExist) {
-      const sessionTime = this.activeTimeZoneTable.getSessionStartTime(this.currentSessionStartTime, this.activeFrequency);
+      const sessionTime = this.activeTimeZoneTable.getSessionStartTime(this.currentSessionStartTime, this.currentSessionStartTime + this.activeFrequency);
 
       this.updateCurrentTime(sessionTime);
     }
