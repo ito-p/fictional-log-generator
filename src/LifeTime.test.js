@@ -4,6 +4,18 @@ import sinon from 'sinon';
 import LifeTime from './LifeTime';
 import ActiveTimeZoneTable from './ActiveTimeZoneTable';
 
+export const TEST_TIMEZONE_CONFIG = [
+//  0:00              6:00              12:00             18:00          23:00
+//  |                 |                 |                 |              |
+  [ 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], // Sunday
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0 ], // Monday
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], // Tuesday
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ], // Wednesday
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ], // Thursday
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ], // Friday
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]  // Saturday
+];
+
 test('initialize', t => {
   sinon.stub(Math, 'random').returns(0.5);
   sinon.stub(ActiveTimeZoneTable.prototype, 'checkSessionExist').returns(true);
@@ -157,3 +169,22 @@ test('fowardToNextSession and overdated', t => {
     true
   );
 });
+
+test('checkSessionExist is true', t => {
+  const lifeTime = new LifeTime([ '2017-01-01 00:00:00', '2017-01-01 01:00:00' ], 60 * 60 * 1000, TEST_TIMEZONE_CONFIG);
+
+  t.is(
+    lifeTime.checkSessionExist(),
+    true
+  );
+});
+
+test('checkSessionExist is false', t => {
+  const lifeTime = new LifeTime([ '2017-01-01 01:00:00', '2017-01-01 02:00:00' ], 60 * 60 * 1000, TEST_TIMEZONE_CONFIG);
+
+  t.is(
+    lifeTime.checkSessionExist(),
+    false
+  );
+});
+

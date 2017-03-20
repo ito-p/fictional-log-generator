@@ -13,6 +13,10 @@ export default class Puppet {
     return this.lifeTime.isOver;
   }
 
+  isActive() {
+    return this.lifeTime.checkSessionExist();
+  }
+
   action(actionLog) {
     return { id: this.id, ...actionLog, timestamp: this.lifeTime.currentDate };
   }

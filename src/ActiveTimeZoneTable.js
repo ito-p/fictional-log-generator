@@ -34,7 +34,7 @@ export default class ActiveTimeZoneTable {
     const range = extract(filters);
     if (range === null) {
       // if filters is not exist, this function returns 0.
-      return 0;
+      return Number.POSITIVE_INFINITY;
     }
 
     const rangeStartTime = range.date.getTime();

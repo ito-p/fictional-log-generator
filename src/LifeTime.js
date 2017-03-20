@@ -20,6 +20,10 @@ export default class LifeTime {
     this.fowardToCurrentSession();
   }
 
+  checkSessionExist() {
+    return this.activeTimeZoneTable.checkSessionExist(this.currentSessionStartTime, this.currentSessionStartTime + this.activeFrequency);
+  }
+
   fowardToNextTime(time) {
     const error = time * 0.2;
     const actionTime = time + (Math.random() * error) - (error / 2); // 20% error
@@ -40,6 +44,8 @@ export default class LifeTime {
       const sessionTime = this.activeTimeZoneTable.getSessionStartTime(this.currentSessionStartTime, this.currentSessionStartTime + this.activeFrequency);
 
       this.updateCurrentTime(sessionTime);
+    } else {
+      this.updateCurrentTime(this.currentSessionStartTime + this.activeFrequency);
     }
   }
 

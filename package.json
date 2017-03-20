@@ -8,7 +8,8 @@
     "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel src --out-dir dist",
     "prepublish": "yarn build",
-    "test": "ava"
+    "test": "ava",
+    "loggen": "babel-node --presets es2015,stage-2 utils/loggen"
   },
   "author": "ito-p <not.1010.number@gmail.com>",
   "license": "MIT",

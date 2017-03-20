@@ -178,7 +178,7 @@ test('search and addToCart', t => {
   Math.random.restore();
 });
 
-test('purchase', t => {
+test('purchase and overdate activeFrequency', t => {
 
   const userInitialState = Object.assign({}, initialState, {
     cart: [ Books[0], Books[3] ]
@@ -187,7 +187,7 @@ test('purchase', t => {
   const puppeteer = new Puppeteer({
     period: [ '2017-01-01 00:00:00', '2017-01-01 00:00:03' ],
 
-    activeFrequency: 3 * 1000,
+    activeFrequency: 1 * 24 * 60 * 60 * 1000, // 1 access in 1 day
 
     idRange: [ 5 ],
 

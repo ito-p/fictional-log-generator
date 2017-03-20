@@ -11,7 +11,7 @@ export default class Puppetteer {
   }
 
   performance(callback) {
-    const { idRange, initialState, period, activeFrequency } = this.config;
+    const { idRange, initialState, period, activeFrequency, activeTimeZone } = this.config;
 
     // for id
     const offset = idRange[0];
@@ -23,7 +23,7 @@ export default class Puppetteer {
     // for clock
     for (let id = offset; id <= max; id++) {
       const state = JSON.parse(stateJson); // deep copy
-      const lifeTime = new LifeTime(period, activeFrequency);
+      const lifeTime = new LifeTime(period, activeFrequency, activeTimeZone);
       const puppet = new Puppet(id, state, lifeTime);
 
       this.manipulate(puppet, callback);
@@ -41,6 +41,10 @@ export default class Puppetteer {
 
       action(
         puppetAction => {
+          if (!puppet.isActive()) {
+            return;
+          }
+
           isActed = true;
           const actionLog = puppet.action(puppetAction);
 

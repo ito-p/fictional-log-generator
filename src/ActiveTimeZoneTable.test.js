@@ -75,7 +75,7 @@ test('getSessionStartTime returns 0', t => {
 
   t.is(
     activeTimeZoneTable.getSessionStartTime(startTime, endTime),
-    0
+    Number.POSITIVE_INFINITY
   );
 });
 

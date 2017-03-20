@@ -1,10 +1,3 @@
-// during
-// time table
-// decide time
-// user_id range
-// action mapper
-// initial state
-
 import Puppeteer from './Puppeteer';
 
 export default class FictionalLogGenerator {
