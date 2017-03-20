@@ -1,0 +1,27 @@
+export default class Puppet {
+  id;
+  lifeTime;
+  state;
+
+  constructor(id, state, lifeTime) {
+    this.id = id;
+    this.lifeTime = lifeTime;
+    this.state = state;
+  }
+
+  get isObsoleted() {
+    return this.lifeTime.isOver;
+  }
+
+  action(actionLog) {
+    return { id: this.id, ...actionLog, timestamp: this.lifeTime.currentDate };
+  }
+
+  think(time) {
+    this.lifeTime.fowardToNextTime(time);
+  }
+
+  leave() {
+    this.lifeTime.fowardToNextSession();
+  }
+}
