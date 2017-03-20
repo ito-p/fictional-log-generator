@@ -36,9 +36,16 @@ export default class ActiveTimeZoneTable {
       // if filters is not exist, this function returns 0.
       return 0;
     }
-    const offset = Math.random() * 60 * 60 * 1000;
 
-    return range.date.getTime() + offset;
+    const rangeStartTime = range.date.getTime();
+    const rangeEndTime = range.date.getTime() + ONE_HOUR_TIME;
+
+    const start = Math.max(rangeStartTime, startTime);
+    const end = Math.min(rangeEndTime, endTime);
+
+    const offset = Math.floor(Math.random() * (end - start));
+
+    return start + offset;
   }
 
   makeFilter(startTime, endTime) {

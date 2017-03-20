@@ -58,7 +58,7 @@ export default class Puppetteer {
       if (isLeave) {
         puppet.leave();
       } else if (isActed) {
-        puppet.think(extracted.decisionTime);
+        puppet.think(extracted.decisionTime * this.config.decisionCoefficient);
       }
     }
   }

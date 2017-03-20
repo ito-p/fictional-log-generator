@@ -15,7 +15,7 @@ test('Generate user logs for book store', t => {
 
     idRange: [ 1 ],
 
-    judgement: 1, // A coefficient related to time to judgment.
+    decisionCoefficient: 1, // A coefficient related to time to judgment.
 
     initialState,
 

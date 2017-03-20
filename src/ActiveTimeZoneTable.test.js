@@ -78,3 +78,16 @@ test('getSessionStartTime returns 0', t => {
     0
   );
 });
+
+test('short time', t => {
+  sinon.stub(Math, 'random').returns(0.5);
+  const activeTimeZoneTable = new ActiveTimeZoneTable(TEST_TIMEZONE_CONFIG);
+  const startTime = new Date('2017-01-01 00:00:01').getTime();
+  const endTime = new Date('2017-01-01 00:00:11').getTime();
+
+  t.deepEqual(
+    new Date(activeTimeZoneTable.getSessionStartTime(startTime, endTime)),
+    new Date('2017-01-01 00:00:06')
+  );
+  Math.random.restore();
+});

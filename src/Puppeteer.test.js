@@ -2,8 +2,19 @@ import test from 'ava';
 import sinon from 'sinon';
 
 import Puppeteer from './Puppeteer';
+import ActiveTimeZoneTable from './ActiveTimeZoneTable';
 import { Books } from '../utils/BookItems';
 import { userAction, initialState } from '../utils/Routine';
+
+test.beforeEach(() => {
+  sinon.stub(ActiveTimeZoneTable.prototype, 'checkSessionExist').returns(true);
+  sinon.stub(ActiveTimeZoneTable.prototype, 'getSessionStartTime').returns(new Date('2017-01-01 00:00:00').getTime());
+});
+
+test.afterEach(() => {
+  ActiveTimeZoneTable.prototype.checkSessionExist.restore();
+  ActiveTimeZoneTable.prototype.getSessionStartTime.restore();
+});
 
 test('transit, select, addToCart', t => {
 
@@ -12,11 +23,11 @@ test('transit, select, addToCart', t => {
   const puppeteer = new Puppeteer({
     period: [ '2017-01-01 00:00:00', '2017-01-01 00:00:03' ],
 
-    activeFrequency: 1 * 24 * 60 * 60 * 1000, // 1 session in 1 day.
+    activeFrequency: 3 * 1000,
 
     idRange: [ 5 ],
 
-    judgement: 1, // A coefficient related to time to judgment.
+    decisionCoefficient: 1, // A coefficient related to time to judgment.
 
     initialState: userInitialState,
 
@@ -76,6 +87,11 @@ test('transit, select, addToCart', t => {
     index++;
   });
 
+  t.is(
+    index,
+    5
+  );
+
   Math.random.restore();
 
 });
@@ -89,11 +105,11 @@ test('search and addToCart', t => {
   const puppeteer = new Puppeteer({
     period: [ '2017-01-01 00:00:00', '2017-01-01 00:00:03' ],
 
-    activeFrequency: 1 * 24 * 60 * 60 * 1000, // 1 session in 1 day.
+    activeFrequency: 3 * 1000,
 
     idRange: [ 5 ],
 
-    judgement: 1, // A coefficient related to time to judgment.
+    decisionCoefficient: 1, // A coefficient related to time to judgment.
 
     initialState: userInitialState,
 
@@ -154,8 +170,12 @@ test('search and addToCart', t => {
     index++;
   });
 
-  Math.random.restore();
+  t.is(
+    index,
+    5
+  );
 
+  Math.random.restore();
 });
 
 test('purchase', t => {
@@ -167,11 +187,11 @@ test('purchase', t => {
   const puppeteer = new Puppeteer({
     period: [ '2017-01-01 00:00:00', '2017-01-01 00:00:03' ],
 
-    activeFrequency: 1 * 24 * 60 * 60 * 1000, // 1 session in 1 day.
+    activeFrequency: 3 * 1000,
 
     idRange: [ 5 ],
 
-    judgement: 1, // A coefficient related to time to judgment.
+    decisionCoefficient: 2, // A coefficient related to time to judgment.
 
     initialState: userInitialState,
 
@@ -183,7 +203,7 @@ test('purchase', t => {
             { action: 'transit', detail: { view: 'Checkout' } },
             { action: 'readCartList' }
           ],
-          decisionTime: 1000
+          decisionTime: 500
         }
       ],
 
@@ -194,7 +214,7 @@ test('purchase', t => {
             { action: 'transit', detail: { view: 'PaymentResult' } },
             { action: 'purchase' }
           ],
-          decisionTime: 1000
+          decisionTime: 500
         },
       ],
 
@@ -204,7 +224,7 @@ test('purchase', t => {
           actions: [
             { action: 'transit', detail: { view: 'Ranking' } }
           ],
-          decisionTime: 1000
+          decisionTime: 500
         },
       ]
     },
@@ -232,6 +252,11 @@ test('purchase', t => {
     );
     index++;
   });
+
+  t.is(
+    index,
+    7
+  );
 
   Math.random.restore();
 
