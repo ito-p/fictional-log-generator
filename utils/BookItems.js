@@ -4,7 +4,7 @@ export const Books = [
     title: 'The Deep learning study book',
     price: 29.99,
     author: '',
-    description: 'Let\'s study Deep learning !',
+    description: 'Let us study Deep learning !',
     category: 'Deep Learning',
     language: 'python'
   },
@@ -19,10 +19,10 @@ export const Books = [
   },
   {
     rank: 3,
-    title: 'Beginners \'Java',
+    title: 'Beginning Java',
     price: 49.99,
     author: 'Evans',
-    description: 'Let\'s study Deep learning !',
+    description: 'Let us study Deep learning !',
     category: 'Java',
     language: 'Java'
   },

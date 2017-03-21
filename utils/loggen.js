@@ -1,5 +1,6 @@
 import FictionalLogGenerator from '../src/FictionalLogGenerator';
 import { userAction, initialState } from './Routine';
+import moment from 'moment';
 
 const flg = new FictionalLogGenerator();
 
@@ -192,13 +193,15 @@ const baseConfig = {
 };
 
 flg.setUserConfig(Object.assign({}, baseConfig, {
-  idRange: [ 1, 10 ]
-}));
-
-flg.setUserConfig(Object.assign({}, baseConfig, {
-  idRange: [ 11, 20 ]
+  idRange: [ 1, 20 ]
 }));
 
 flg.generate(log => {
-  console.log(log);
+  const user_id = log.id;
+  const action = log.action;
+  const json = JSON.stringify(log.detail);
+  const timestamp = moment(log.timestamp).utc().format('YYYY-MM-DD HH:mm:ss');
+
+  const query = `INSERT INTO actions (user_id, action, detail, timestamp) VALUES (${user_id},'${action}','${json}','${timestamp}');`;
+  console.log(query);
 });

@@ -9,7 +9,7 @@
     "build": "babel src --out-dir dist",
     "prepublish": "yarn build",
     "test": "ava",
-    "loggen": "babel-node --presets es2015,stage-2 utils/loggen"
+    "exec": "babel-node --presets es2015,stage-2"
   },
   "author": "ito-p <not.1010.number@gmail.com>",
   "license": "MIT",
@@ -47,8 +47,10 @@
     "babel-register": "^6.18.0",
     "eslint": "^3.12.2",
     "eslint-plugin-babel": "^4.0.0",
+    "moment": "^2.18.0",
     "nodemon": "^1.11.0",
-    "sinon": "^2.0.0"
+    "sinon": "^2.0.0",
+    "tabulation-query-builder": "^0.0.5"
   },
   "ava": {
     "files": "src/**/*.test.js",
