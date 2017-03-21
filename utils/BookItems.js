@@ -2,7 +2,7 @@ export const Books = [
   {
     rank: 1,
     title: 'The Deep learning study book',
-    price: 29.99,
+    price: 30,
     author: '',
     description: 'Let us study Deep learning !',
     category: 'Deep Learning',
@@ -11,7 +11,7 @@ export const Books = [
   {
     rank: 2,
     title: 'R for Data Analytics',
-    price: 39.99,
+    price: 40,
     author: 'Wickman',
     description: 'Analytical R world.',
     category: 'Data Science',
@@ -20,7 +20,7 @@ export const Books = [
   {
     rank: 3,
     title: 'Beginning Java',
-    price: 49.99,
+    price: 50,
     author: 'Evans',
     description: 'Let us study Deep learning !',
     category: 'Java',
@@ -29,7 +29,7 @@ export const Books = [
   {
     rank: 4,
     title: 'Beautiful React',
-    price: 29.99,
+    price: 30,
     author: 'John',
     description: 'Perfect React world.',
     category: 'Web',
@@ -38,7 +38,7 @@ export const Books = [
   {
     rank: 5,
     title: 'Wonder Javascript',
-    price: 29.99,
+    price: 20,
     author: 'Unknown',
     description: 'Abnormal Javascripts',
     category: 'Web',
